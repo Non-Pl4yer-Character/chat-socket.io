@@ -1,16 +1,18 @@
-const app = require('express')()
+const express = require('express')
+const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io').listen(server)
-
+const path = require('path')
 // 监听80端口
 server.listen(80)
 console.log('server running on port 80');
 
 // 渲染页面
-app.use('/', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html')
 })
 
+app.use(express.static(path.join(__dirname, './public')))
 const users = []
 const connections = []
 
